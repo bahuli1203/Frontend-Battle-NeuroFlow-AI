@@ -29,15 +29,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Hex values for Three.js WebGL scenes
   const themeHex = {
-    blue: 0x00D4FF,
-    purple: 0x7B61FF,
-    green: 0x00FFB2,
+    blue: 0xD9E8E2, // Mystic Mint
+    purple: 0xFF9932, // Deep Saffron
+    green: 0xFFC801, // Forsythia
   }[theme];
 
   const themeColorStr = {
-    blue: "#00D4FF",
-    purple: "#7B61FF",
-    green: "#00FFB2",
+    blue: "#D9E8E2", // Mystic Mint
+    purple: "#FF9932", // Deep Saffron
+    green: "#FFC801", // Forsythia
   }[theme];
 
   return (

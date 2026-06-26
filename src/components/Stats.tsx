@@ -61,7 +61,7 @@ export function Counter({ end, decimals = 0, suffix = "", prefix = "" }: Counter
   };
 
   return (
-    <span ref={elementRef} className="tabular-nums">
+    <span ref={elementRef} className="tabular-nums font-heading">
       {prefix}
       {formatNumberValue(count, decimals)}
       {suffix}
@@ -74,15 +74,15 @@ export default function Stats() {
     {
       label: "Platform Uptime",
       value: <Counter end={99.98} decimals={2} suffix="%" />,
-      icon: <Activity className="w-5 h-5 text-[#00D4FF]" />,
+      icon: <Activity className="w-5 h-5 text-[#FFC801]" />,
       desc: "Guaranteed SLA for high-throughput nodes.",
-      borderColor: "neon-border-blue-hover",
-      glowColor: "glass-card-glow-blue",
+      borderColor: "neon-border-green-hover",
+      glowColor: "glass-card-glow-green",
     },
     {
       label: "Tasks Automated",
       value: <Counter end={10} suffix="M+" />,
-      icon: <Cpu className="w-5 h-5 text-[#7B61FF]" />,
+      icon: <Cpu className="w-5 h-5 text-[#FF9932]" />,
       desc: "Complex multi-agent operations completed.",
       borderColor: "neon-border-purple-hover",
       glowColor: "glass-card-glow-purple",
@@ -90,45 +90,45 @@ export default function Stats() {
     {
       label: "Global Enterprises",
       value: <Counter end={5000} suffix="+" />,
-      icon: <ShieldCheck className="w-5 h-5 text-[#00FFB2]" />,
+      icon: <ShieldCheck className="w-5 h-5 text-[#D9E8E2]" />,
       desc: "Vetted SOC2 compliance & data security.",
-      borderColor: "neon-border-green-hover",
-      glowColor: "glass-card-glow-green",
-    },
-    {
-      label: "Countries Scale",
-      value: <Counter end={87} />,
-      icon: <Globe className="w-5 h-5 text-[#00D4FF]" />,
-      desc: "Federated computing clusters globally distributed.",
       borderColor: "neon-border-blue-hover",
       glowColor: "glass-card-glow-blue",
+    },
+    {
+      label: "Countries Connected",
+      value: <Counter end={127} />,
+      icon: <Globe className="w-5 h-5 text-[#FFC801]" />,
+      desc: "Federated computing clusters globally distributed.",
+      borderColor: "neon-border-green-hover",
+      glowColor: "glass-card-glow-green",
     },
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-24 bg-[#172B36] overflow-hidden">
       {/* Glow Backdrops */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[30vh] bg-[#7B61FF]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[30vh] bg-[#FF9932]/2 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {statsData.map((stat, idx) => (
             <div
               key={idx}
-              className={`glass-panel border rounded-2xl p-6 transition-all duration-300 ${stat.borderColor} ${stat.glowColor} group hover:-translate-y-1 hover:bg-[#0B1026]/60`}
+              className={`glass-panel border rounded-2xl p-6 transition-all duration-300 ${stat.borderColor} ${stat.glowColor} group hover:-translate-y-1 hover:bg-[#114C5A]/15`}
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 group-hover:border-white/20 transition-colors">
                   {stat.icon}
                 </div>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#94A3B8]/60 group-hover:text-white/60 transition-colors">
-                  Live Counter
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#94A3B8]/60 group-hover:text-white/60 transition-colors font-heading">
+                  Telemetry Live
                 </span>
               </div>
-              <h3 className="font-heading font-bold text-4xl text-white tracking-tight mb-1">
+              <h3 className="font-heading font-extrabold text-4xl text-white tracking-tight mb-1">
                 {stat.value}
               </h3>
-              <p className="text-sm font-heading font-medium text-white/80 mb-1">
+              <p className="text-sm font-heading font-semibold text-white/80 mb-1">
                 {stat.label}
               </p>
               <p className="text-xs text-muted font-sans leading-relaxed">

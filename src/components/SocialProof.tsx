@@ -50,9 +50,9 @@ export default function SocialProof() {
   const doubledLogos = [...LOGOS, ...LOGOS, ...LOGOS];
 
   return (
-    <section className="relative py-12 bg-[#0B1026]/40 border-y border-white/5 overflow-hidden">
+    <section className="relative py-12 bg-[#114C5A]/10 border-y border-white/5 overflow-hidden">
       {/* Muted background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-transparent to-[#050816] z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#172B36] via-transparent to-[#172B36] z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
         <h2 className="text-xs font-heading font-semibold text-muted uppercase tracking-widest">

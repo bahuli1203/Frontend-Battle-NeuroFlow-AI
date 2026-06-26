@@ -57,10 +57,10 @@ export default function EasterEgg() {
     }
 
     const draw = () => {
-      ctx.fillStyle = "rgba(5, 8, 22, 0.08)"; // space background with trails
+      ctx.fillStyle = "rgba(23, 43, 54, 0.08)"; // space background with trails (Oceanic Noir)
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = "#00FFB2"; // Emerald theme color
+      ctx.fillStyle = "#FFC801"; // Forsythia theme color
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < rainDrops.length; i++) {
@@ -74,8 +74,8 @@ export default function EasterEgg() {
       }
 
       // Draw Center HUD Panel
-      ctx.fillStyle = "rgba(11, 16, 38, 0.85)";
-      ctx.strokeStyle = "#00FFB2";
+      ctx.fillStyle = "rgba(17, 76, 90, 0.85)"; // Nocturnal Expedition
+      ctx.strokeStyle = "#FFC801";
       ctx.lineWidth = 2;
       const boxWidth = 500;
       const boxHeight = 160;
@@ -92,7 +92,7 @@ export default function EasterEgg() {
       ctx.textAlign = "center";
       ctx.fillText("NEUROFLOW CORE OVERRIDE", width / 2, height / 2 - 20);
 
-      ctx.fillStyle = "#00FFB2";
+      ctx.fillStyle = "#FFC801";
       ctx.font = "13px monospace";
       ctx.fillText("STATUS: GRAVITY SHIELD BYPASSED [IDDQD ACTIVE]", width / 2, height / 2 + 15);
       
@@ -119,7 +119,7 @@ export default function EasterEgg() {
   if (!isActive) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#050816] overflow-hidden select-none cursor-crosshair">
+    <div className="fixed inset-0 z-[9999] bg-[#172B36] overflow-hidden select-none cursor-crosshair">
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );

@@ -3,10 +3,13 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SocialProof from "@/components/SocialProof";
 import Stats from "@/components/Stats";
+import LiveActivityFeed from "@/components/LiveActivityFeed";
 import Features from "@/components/Features";
 import Dashboard from "@/components/Dashboard";
 import AutomationVisualization from "@/components/AutomationVisualization";
 import WorkflowBuilder from "@/components/WorkflowBuilder";
+import WorldNetwork from "@/components/WorldNetwork";
+import TrustSecurity from "@/components/TrustSecurity";
 import Timeline from "@/components/Timeline";
 import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
@@ -52,12 +55,35 @@ export default function Home() {
       <main className="flex-1 w-full pb-20">
         <Hero />
         <SocialProof />
+        
         <Stats />
+        
+        {/* Telemetry Console Stream */}
+        <section className="py-20 relative bg-[#172B36] overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[30vh] bg-[#FF9932]/2 rounded-full blur-[120px] pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-6 relative z-10 text-center space-y-8">
+            <div className="max-w-xl mx-auto text-center mb-4">
+              <h2 className="text-xs font-heading font-semibold text-muted uppercase tracking-widest">
+                Real-Time Telemetry Stream
+              </h2>
+            </div>
+            <LiveActivityFeed />
+          </div>
+        </section>
+
         <Features />
         <Dashboard />
         <AutomationVisualization />
         <WorkflowBuilder />
+        
+        {/* Low-latency network connectivity map */}
+        <WorldNetwork />
+        
         <Timeline />
+        
+        {/* Compliance audit trust badges */}
+        <TrustSecurity />
+
         <Pricing />
         <Testimonials />
       </main>

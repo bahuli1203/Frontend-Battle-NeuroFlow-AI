@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { Brain, TrendingUp, Cpu, ShieldAlert, BarChart3, MessageSquarePlus, ChevronDown, CheckCircle2 } from "lucide-react";
+import {
+  ArrowTrendingUpIcon,
+  CubeSolidIcon,
+  LinkSolidIcon,
+  ChevronDownIcon,
+  ChartPieIcon,
+  ArrowPathIcon,
+  TerminalIcon,
+  Cog8ToothIcon,
+} from "@/components/icons/CustomIcons";
 import { useTheme } from "@/context/ThemeContext";
 
 interface FeatureItem {
@@ -26,41 +35,37 @@ export default function Features() {
   const features: FeatureItem[] = [
     {
       id: 0,
-      title: "AI Agents Engine",
-      shortDesc: "Autonomous workflows powered by LLMs.",
-      longDesc: "Deploy context-aware cognitive agents that interact with databases, execute logic nodes, and self-correct workflow exceptions in real-time.",
-      icon: <Brain className="w-5 h-5 text-[#00D4FF]" />,
-      color: "from-[#00D4FF] to-[#7B61FF]",
-      borderColor: "rgba(0, 212, 255, 0.25)",
-      glowColor: "rgba(0, 212, 255, 0.15)",
+      title: "AI Agents",
+      shortDesc: "Deploy context-aware cognitive agents that self-correct.",
+      longDesc: "Deploy autonomous cognitive agents that query database schemas, handle API connections, and self-correct workflow exceptions in real-time.",
+      icon: <ChartPieIcon className="w-5 h-5 text-[#FF9932]" />,
+      color: "from-[#FF9932] to-[#FFC801]",
+      borderColor: "rgba(255, 153, 50, 0.25)",
+      glowColor: "rgba(255, 153, 50, 0.15)",
       gridClass: "md:col-span-8 md:row-span-1",
       visual: (
-        <div className="relative w-full h-full min-h-[160px] bg-gradient-to-br from-[#0B1026] to-[#050816] rounded-xl border border-white/5 p-4 overflow-hidden flex flex-col justify-between">
+        <div className="relative w-full h-full min-h-[170px] bg-gradient-to-br from-[#114C5A]/40 to-[#172B36] rounded-xl border border-white/5 p-4 overflow-hidden flex flex-col justify-between">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[10px] uppercase tracking-widest text-[#00D4FF] font-bold">Agent Status</span>
-            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#00FFB2]/10 border border-[#00FFB2]/20 text-[9px] text-[#00FFB2] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00FFB2] animate-ping" />
+            <span className="text-[10px] uppercase tracking-widest text-[#FF9932] font-heading font-bold">Agent Cells</span>
+            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#FFC801]/10 border border-[#FFC801]/20 text-[9px] text-[#FFC801] font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFC801] animate-ping" />
               Active
             </span>
           </div>
-          <div className="space-y-2">
-            <div className="h-6 rounded bg-white/5 border border-white/10 flex items-center px-2 justify-between text-[10px] text-white/80">
-              <span className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#7B61FF]" />
-                Extracting CSV Payload...
-              </span>
-              <span className="text-muted">98% Match</span>
-            </div>
-            <div className="h-6 rounded bg-white/5 border border-white/10 flex items-center px-2 justify-between text-[10px] text-white/80">
-              <span className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF]" />
-                Running Vector Search...
-              </span>
-              <span className="text-muted">0.03ms</span>
-            </div>
+          {/* Floating particles animation */}
+          <div className="relative h-16 w-full overflow-hidden flex items-center justify-around">
+            <div className="absolute top-[20%] left-[20%] w-2 h-2 rounded-full bg-[#FF9932]/70 animate-float" />
+            <div className="absolute bottom-[30%] left-[45%] w-3 h-3 rounded-full bg-[#FFC801]/50 animate-float-delayed" />
+            <div className="absolute top-[40%] right-[25%] w-2 h-2 rounded-full bg-[#D9E8E2]/60 animate-float" />
+            <div className="absolute bottom-[10%] right-[10%] w-1.5 h-1.5 rounded-full bg-[#FF9932] animate-float-delayed" />
+            
+            {/* Visual synapse mesh placeholder */}
+            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xs text-white/80 font-mono">Agent-A</div>
+            <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xs text-white/80 font-mono">Agent-B</div>
+            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xs text-white/80 font-mono">Agent-C</div>
           </div>
-          <div className="h-8 rounded-lg bg-[#00D4FF]/10 border border-[#00D4FF]/20 flex items-center justify-center text-xs text-[#00D4FF] font-medium font-heading">
-            14.2k operations/sec
+          <div className="h-8 rounded-lg bg-[#FF9932]/10 border border-[#FF9932]/20 flex items-center justify-center text-xs text-[#FF9932] font-semibold font-heading">
+            18.4k tasks evaluated/sec
           </div>
         </div>
       ),
@@ -68,26 +73,40 @@ export default function Features() {
     {
       id: 1,
       title: "Predictive Analytics",
-      shortDesc: "Forecast trends before they happen.",
-      longDesc: "Leverage advanced regression models and anomaly detection pipelines to accurately project key metrics and database volumes up to 90 days out.",
-      icon: <TrendingUp className="w-5 h-5 text-[#7B61FF]" />,
-      color: "from-[#7B61FF] to-[#00FFB2]",
-      borderColor: "rgba(123, 97, 255, 0.25)",
-      glowColor: "rgba(123, 97, 255, 0.15)",
+      shortDesc: "Project database volumes and scale dynamically.",
+      longDesc: "Leverage regression pipelines to project key transaction metrics and automatically scale compute nodes to handle traffic surges up to 90 days out.",
+      icon: <ArrowTrendingUpIcon className="w-5 h-5 text-[#FF9932]" />,
+      color: "from-[#FF9932] to-[#D9E8E2]",
+      borderColor: "rgba(255, 153, 50, 0.25)",
+      glowColor: "rgba(255, 153, 50, 0.15)",
       gridClass: "md:col-span-4 md:row-span-1",
       visual: (
-        <div className="relative w-full h-full min-h-[160px] bg-gradient-to-br from-[#0B1026] to-[#050816] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
-          <div className="text-[10px] uppercase tracking-widest text-[#7B61FF] font-bold mb-2">Trend Velocity</div>
-          {/* Mini dynamic chart */}
-          <div className="h-20 w-full flex items-end gap-1.5 pt-2 border-b border-white/5 pb-1">
-            <div className="w-full bg-[#7B61FF]/10 h-[30%] rounded-sm transition-all duration-300 hover:bg-[#7B61FF]/40" />
-            <div className="w-full bg-[#7B61FF]/20 h-[45%] rounded-sm transition-all duration-300 hover:bg-[#7B61FF]/40" />
-            <div className="w-full bg-[#7B61FF]/30 h-[60%] rounded-sm transition-all duration-300 hover:bg-[#7B61FF]/40" />
-            <div className="w-full bg-[#00D4FF]/40 h-[80%] rounded-sm transition-all duration-300 hover:bg-[#00D4FF]/60" />
-            <div className="w-full bg-gradient-to-t from-[#00FFB2]/50 to-[#00FFB2] h-[95%] rounded-sm animate-pulse" />
+        <div className="relative w-full h-full min-h-[170px] bg-gradient-to-br from-[#114C5A]/40 to-[#172B36] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
+          <div className="text-[10px] uppercase tracking-widest text-[#FF9932] font-heading font-bold mb-1">Compute Forecast</div>
+          {/* Animated SVG line graph */}
+          <div className="h-20 w-full relative">
+            <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+              <path
+                d="M0,35 Q 20,20 40,28 T 80,10 T 100,5"
+                fill="none"
+                stroke="#FF9932"
+                strokeWidth="1.5"
+                strokeDasharray="100"
+                strokeDashoffset="100"
+                className="animate-pulse"
+                style={{
+                  animation: "drawPath 3s ease-out forwards infinite",
+                }}
+              />
+            </svg>
+            <style>{`
+              @keyframes drawPath {
+                to { stroke-dashoffset: 0; }
+              }
+            `}</style>
           </div>
-          <div className="text-center text-[10px] text-[#00FFB2] font-semibold mt-1">
-            +38.4% Efficiency Vector
+          <div className="text-center text-[10px] text-[#FFC801] font-semibold mt-1">
+            +42.6% Automation Velocity
           </div>
         </div>
       ),
@@ -95,128 +114,123 @@ export default function Features() {
     {
       id: 2,
       title: "Smart Integrations",
-      shortDesc: "Connect 500+ services instantly.",
-      longDesc: "Zero-latency synchronization with your database stack, cloud providers, and SaaS applications with simple automated mapping triggers.",
-      icon: <Cpu className="w-5 h-5 text-[#00FFB2]" />,
-      color: "from-[#00FFB2] to-[#00D4FF]",
-      borderColor: "rgba(0, 255, 178, 0.25)",
-      glowColor: "rgba(0, 255, 178, 0.15)",
+      shortDesc: "Synchronize database streams in milliseconds.",
+      longDesc: "Establish zero-latency connections between AWS clusters, GCP APIs, Snowflake, Stripe, Slack, and your internal vector databases.",
+      icon: <CubeSolidIcon className="w-5 h-5 text-[#FFC801]" />,
+      color: "from-[#FFC801] to-[#D9E8E2]",
+      borderColor: "rgba(255, 200, 1, 0.25)",
+      glowColor: "rgba(255, 200, 1, 0.15)",
       gridClass: "md:col-span-4 md:row-span-1",
       visual: (
-        <div className="relative w-full h-full min-h-[160px] bg-gradient-to-br from-[#0B1026] to-[#050816] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
-          <span className="text-[10px] uppercase tracking-widest text-[#00FFB2] font-bold">Network Synapses</span>
+        <div className="relative w-full h-full min-h-[170px] bg-gradient-to-br from-[#114C5A]/40 to-[#172B36] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
+          <span className="text-[10px] uppercase tracking-widest text-[#FFC801] font-heading font-bold">Sync Nodes</span>
           <div className="flex items-center justify-around py-4">
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-heading text-xs text-white">AWS</div>
-            <div className="w-4 h-[1px] bg-gradient-to-r from-white/10 to-[#00FFB2] animate-pulse" />
-            <div className="w-10 h-10 rounded-full bg-[#00FFB2]/10 border border-[#00FFB2]/30 flex items-center justify-center font-heading text-xs text-[#00FFB2]">Core</div>
-            <div className="w-4 h-[1px] bg-gradient-to-r from-[#00FFB2] to-white/10" />
-            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-heading text-xs text-white">GCP</div>
+            <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-heading text-[10px] text-white">AWS</div>
+            {/* Animated connection nodes */}
+            <div className="w-3 h-3 rounded-full bg-[#FFC801] animate-ping" />
+            <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-heading text-[10px] text-white">GCP</div>
           </div>
-          <span className="text-[9px] text-muted text-center">Auto-mapping active</span>
+          <span className="text-[9px] text-muted text-center">Sync latency &lt;1.8ms</span>
         </div>
       ),
     },
     {
       id: 3,
       title: "Enterprise Security",
-      shortDesc: "SOC2, GDPR, ISO compliant infrastructure.",
-      longDesc: "Military-grade data protection including end-to-end TLS 1.3 encryption, automatic key-rotation, and sandboxed execution environments for safety.",
-      icon: <ShieldAlert className="w-5 h-5 text-[#7B61FF]" />,
-      color: "from-[#7B61FF] to-[#00D4FF]",
-      borderColor: "rgba(123, 97, 255, 0.25)",
-      glowColor: "rgba(123, 97, 255, 0.15)",
+      shortDesc: "SOC2, GDPR, and ISO compliant shielding.",
+      longDesc: "Sandboxed workflow execution and automatic hardware HSM wrap-key rotations protect core data indexes with zero-trust isolation.",
+      icon: <LinkSolidIcon className="w-5 h-5 text-[#FF9932]" />,
+      color: "from-[#FF9932] to-[#D9E8E2]",
+      borderColor: "rgba(255, 153, 50, 0.25)",
+      glowColor: "rgba(255, 153, 50, 0.15)",
       gridClass: "md:col-span-8 md:row-span-1",
       visual: (
-        <div className="relative w-full h-full min-h-[160px] bg-gradient-to-br from-[#0B1026] to-[#050816] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
+        <div className="relative w-full h-full min-h-[170px] bg-gradient-to-br from-[#114C5A]/40 to-[#172B36] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[10px] uppercase tracking-widest text-[#7B61FF] font-bold">Certifications</span>
-            <span className="text-[10px] text-[#00FFB2] font-mono">SECURE</span>
+            <span className="text-[10px] uppercase tracking-widest text-[#FF9932] font-heading font-bold">Shield Vault</span>
+            <span className="text-[10px] text-[#FFC801] font-mono">ENCRYPTED</span>
           </div>
-          <div className="grid grid-cols-3 gap-3">
-            {["SOC2 Type II", "GDPR Ready", "ISO 27001"].map((cert, index) => (
-              <div key={index} className="px-2.5 py-3 rounded-lg bg-white/5 border border-white/10 flex flex-col items-center gap-1 text-center">
-                <CheckCircle2 className="w-4 h-4 text-[#00FFB2]" />
-                <span className="text-[9px] font-medium text-white/80">{cert}</span>
-              </div>
-            ))}
+          <div className="flex justify-around items-center py-2">
+            {/* Rotating Shield Graphic */}
+            <div className="w-14 h-14 rounded-full border border-[#FF9932]/20 flex items-center justify-center animate-spin-slow">
+              <Cog8ToothIcon className="w-6 h-6 text-[#FF9932]" />
+            </div>
+            <div className="space-y-1 text-right text-[10px] font-mono">
+              <div>• TLS 1.3 Strict</div>
+              <div>• SOC2 Audited</div>
+              <div>• ISO 27001 Certified</div>
+            </div>
           </div>
-          <span className="text-[9px] text-muted text-center pt-1">Shielded via hardware HSM keys</span>
+          <span className="text-[9px] text-muted text-center pt-1">Automated hardware Key Rotations</span>
         </div>
       ),
     },
     {
       id: 4,
-      title: "Real-Time Insights",
-      shortDesc: "Live dashboards and instant event alerts.",
-      longDesc: "Push live analytical pipelines straight to your console with microsecond synchronization times and automatic multi-channel incident notifications.",
-      icon: <BarChart3 className="w-5 h-5 text-[#00D4FF]" />,
-      color: "from-[#00D4FF] to-[#00FFB2]",
-      borderColor: "rgba(0, 212, 255, 0.25)",
-      glowColor: "rgba(0, 212, 255, 0.15)",
+      title: "Workflow Engine",
+      shortDesc: "Orchestrate complex visual flow pipelines.",
+      longDesc: "Construct, test, and release visually designed pipeline schemas. Execute triggers on serverless edge executor instances instantly.",
+      icon: <ArrowPathIcon className="w-5 h-5 text-[#FFC801]" />,
+      color: "from-[#FFC801] to-[#FF9932]",
+      borderColor: "rgba(255, 200, 1, 0.25)",
+      glowColor: "rgba(255, 200, 1, 0.15)",
       gridClass: "md:col-span-7 md:row-span-1",
       visual: (
-        <div className="relative w-full h-full min-h-[160px] bg-gradient-to-br from-[#0B1026] to-[#050816] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
-          <div className="flex justify-between items-center">
-            <span className="text-[10px] uppercase tracking-widest text-[#00D4FF] font-bold">Event Feed</span>
-            <span className="w-2 h-2 rounded-full bg-[#00FFB2] animate-pulse" />
-          </div>
-          <div className="space-y-1.5 my-2">
-            <div className="flex items-center gap-2 text-[9px] border-b border-white/5 pb-1">
-              <span className="text-[#00FFB2]">[12:44:01]</span>
-              <span className="text-white/80">Anomaly resolved inside billing cluster</span>
-            </div>
-            <div className="flex items-center gap-2 text-[9px] border-b border-white/5 pb-1">
-              <span className="text-[#00D4FF]">[12:43:59]</span>
-              <span className="text-white/80">Scaling cluster nodes +3 via auto-scale</span>
-            </div>
-            <div className="flex items-center gap-2 text-[9px]">
-              <span className="text-[#7B61FF]">[12:43:50]</span>
-              <span className="text-white/80">Ingesting raw schema payload from AWS S3</span>
-            </div>
-          </div>
-          <span className="text-[9px] text-[#00D4FF]">Connected to server-sent events</span>
+        <div className="relative w-full h-full min-h-[170px] bg-gradient-to-br from-[#114C5A]/40 to-[#172B36] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
+          <span className="text-[10px] uppercase tracking-widest text-[#FFC801] font-heading font-bold">Pipeline Runs</span>
+          {/* SVG Pipelines with animated data packets */}
+          <svg className="w-full h-12" fill="none">
+            <path d="M10 20 H300" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
+            <path d="M10 20 H300" stroke="#FFC801" strokeWidth="3" strokeDasharray="15,40" style={{ animation: "dashFlowFeatures 3s linear infinite" }} />
+          </svg>
+          <style>{`
+            @keyframes dashFlowFeatures {
+              to { stroke-dashoffset: -55; }
+            }
+          `}</style>
+          <span className="text-[9px] text-[#FFC801] font-mono">Status: Pipe Ingestion OK</span>
         </div>
       ),
     },
     {
       id: 5,
-      title: "Natural Language Automation",
-      shortDesc: "Describe workflows in plain English.",
-      longDesc: "Type what process you want done, and our neural model compiles, tests, and deploys the corresponding logic flow instantly.",
-      icon: <MessageSquarePlus className="w-5 h-5 text-[#00FFB2]" />,
-      color: "from-[#00FFB2] to-[#7B61FF]",
-      borderColor: "rgba(0, 255, 178, 0.25)",
-      glowColor: "rgba(0, 255, 178, 0.15)",
+      title: "Real-Time Insights",
+      shortDesc: "Live dashboards and instant event alerts.",
+      longDesc: "Push streaming analytical pipelines directly to a logging board with microsecond synchronization times and event notification webhooks.",
+      icon: <TerminalIcon className="w-5 h-5 text-[#FF9932]" />,
+      color: "from-[#FF9932] to-[#FFC801]",
+      borderColor: "rgba(255, 153, 50, 0.25)",
+      glowColor: "rgba(255, 153, 50, 0.15)",
       gridClass: "md:col-span-5 md:row-span-1",
       visual: (
-        <div className="relative w-full h-full min-h-[160px] bg-gradient-to-br from-[#0B1026] to-[#050816] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
-          <span className="text-[10px] uppercase tracking-widest text-[#00FFB2] font-bold">Semantic Compiler</span>
-          <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-[10px] text-white/70 italic my-1 font-mono">
-            "When a customer pays more than $100, send their email to Slack and database."
+        <div className="relative w-full h-full min-h-[170px] bg-gradient-to-br from-[#114C5A]/40 to-[#172B36] rounded-xl border border-white/5 p-4 flex flex-col justify-between overflow-hidden">
+          <div className="flex justify-between items-center">
+            <span className="text-[10px] uppercase tracking-widest text-[#FF9932] font-heading font-bold">Terminal Telemetry</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC801] animate-pulse" />
           </div>
-          <div className="flex items-center gap-2 justify-end">
-            <span className="text-[9px] text-[#00FFB2] font-semibold">Compiled</span>
-            <div className="h-1.5 w-16 bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-[#00FFB2] to-[#00D4FF] w-full" />
-            </div>
+          <div className="space-y-1 font-mono text-[9px] text-[#D9E8E2]">
+            <div className="truncate text-white/80"><span className="text-[#FF9932]">✓</span> Data schema validated</div>
+            <div className="truncate text-white/80"><span className="text-[#FF9932]">✓</span> Transferred 48.2k events</div>
+            <div className="truncate text-white/85"><span className="text-[#FFC801]">ℹ</span> Synced Pinecone index</div>
           </div>
+          <span className="text-[9px] text-muted">Microsecond cluster reporting</span>
         </div>
       ),
     },
   ];
 
   return (
-    <section id="features" ref={containerRef} className="relative py-32 bg-[#050816]">
+    <section id="features" ref={containerRef} className="relative py-32 bg-[#172B36]">
       {/* Background radial elements */}
-      <div className="absolute top-[30%] right-[10%] w-[35vw] h-[35vw] rounded-full bg-[#7B61FF]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[30%] left-[10%] w-[30vw] h-[30vw] rounded-full bg-[#00D4FF]/5 blur-[100px] pointer-events-none" />
+      <div className="absolute top-[30%] right-[10%] w-[35vw] h-[35vw] rounded-full bg-[#FF9932]/3 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[30%] left-[10%] w-[30vw] h-[30vw] rounded-full bg-[#FFC801]/3 blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Heading */}
         <div className="max-w-3xl mx-auto text-center mb-20 space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00FFB2]" />
-            <span className="text-xs font-heading font-semibold text-[#00FFB2] tracking-wider uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC801]" />
+            <span className="text-xs font-heading font-semibold text-[#FFC801] tracking-wider uppercase">
               Bento Intelligence Stack
             </span>
           </div>
@@ -265,7 +279,7 @@ export default function Features() {
                     <p className="text-[11px] text-muted">{feat.shortDesc}</p>
                   </div>
                 </div>
-                <ChevronDown
+                <ChevronDownIcon
                   className={`w-5 h-5 text-muted transition-transform duration-300 ${
                     activeIndex === feat.id ? "rotate-180 text-white" : ""
                   }`}
@@ -277,7 +291,7 @@ export default function Features() {
                   activeIndex === feat.id ? "max-h-[500px] border-t border-white/5" : "max-h-0"
                 }`}
               >
-                <div className="p-5 space-y-5 bg-[#050816]/40">
+                <div className="p-5 space-y-5 bg-[#172B36]/40">
                   <p className="text-xs text-muted leading-relaxed font-sans">{feat.longDesc}</p>
                   <div className="w-full aspect-[4/3] max-w-[320px] mx-auto">{feat.visual}</div>
                 </div>
@@ -328,8 +342,8 @@ function BentoCard({ feat, isActive, onSelect }: BentoCardProps) {
         feat.gridClass
       } ${
         isActive
-          ? "bg-[#0B1026]/75 border-opacity-90"
-          : "hover:bg-[#0B1026]/40 hover:border-white/10"
+          ? "bg-[#114C5A]/45 border-opacity-90"
+          : "hover:bg-[#114C5A]/20 hover:border-white/10"
       }`}
       style={{
         borderColor: isActive ? themeColorStr : "rgba(255, 255, 255, 0.05)",
@@ -362,7 +376,7 @@ function BentoCard({ feat, isActive, onSelect }: BentoCardProps) {
       </div>
 
       <div className="space-y-2 mb-6 relative z-10">
-        <h3 className="font-heading font-bold text-lg text-white group-hover:text-[#00D4FF] transition-colors duration-200">
+        <h3 className="font-heading font-bold text-lg text-white group-hover:text-[var(--accent-color)] transition-colors duration-200">
           {feat.title}
         </h3>
         <p className="text-xs text-muted leading-relaxed font-sans">

@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Search, Terminal, Palette, ArrowRight, X } from "lucide-react";
+import {
+  SearchIcon,
+  XMarkIcon,
+  ArrowRightIcon,
+  PaletteIcon,
+  TerminalIcon,
+} from "@/components/icons/CustomIcons";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function CommandPalette() {
@@ -78,23 +84,23 @@ export default function CommandPalette() {
       category: "Theme Customization",
       items: [
         {
-          name: "Switch to Quantum Purple",
-          desc: "Set accent theme to neon purple",
-          icon: <Palette className="w-4 h-4 text-[#7B61FF]" />,
+          name: "Switch to Deep Saffron",
+          desc: "Set accent theme to warm saffron",
+          icon: <PaletteIcon className="w-4 h-4 text-[#FF9932]" />,
           shortcut: "T P",
           action: () => setTheme("purple"),
         },
         {
-          name: "Switch to Cyber Blue",
-          desc: "Set accent theme to glowing blue",
-          icon: <Palette className="w-4 h-4 text-[#00D4FF]" />,
+          name: "Switch to Mystic Mint",
+          desc: "Set accent theme to cool mint",
+          icon: <PaletteIcon className="w-4 h-4 text-[#D9E8E2]" />,
           shortcut: "T B",
           action: () => setTheme("blue"),
         },
         {
-          name: "Switch to Emerald AI",
-          desc: "Set accent theme to emerald green",
-          icon: <Palette className="w-4 h-4 text-[#00FFB2]" />,
+          name: "Switch to Forsythia",
+          desc: "Set accent theme to glowing gold",
+          icon: <PaletteIcon className="w-4 h-4 text-[#FFC801]" />,
           shortcut: "T G",
           action: () => setTheme("green"),
         },
@@ -106,7 +112,7 @@ export default function CommandPalette() {
         {
           name: "Initialize Matrix Mode",
           desc: "Cheat-code IDDQD override effect",
-          icon: <Terminal className="w-4 h-4 text-emerald-400" />,
+          icon: <TerminalIcon className="w-4 h-4 text-[#FFC801]" />,
           shortcut: "M A T",
           action: () => {
             // Dispatch a keydown cheat event to window
@@ -142,8 +148,8 @@ export default function CommandPalette() {
       {/* Search Container */}
       <div className="w-full max-w-2xl overflow-hidden glass-panel-heavy rounded-2xl border border-white/10 shadow-2xl max-h-[80vh] flex flex-col">
         {/* Input Header */}
-        <div className="flex items-center gap-3 px-4 py-4 border-b border-white/5 bg-[#050816]/80">
-          <Search className="w-5 h-5 text-muted" />
+        <div className="flex items-center gap-3 px-4 py-4 border-b border-white/5 bg-[#172B36]/80">
+          <SearchIcon className="w-5 h-5 text-muted" />
           <input
             ref={inputRef}
             type="text"
@@ -156,12 +162,12 @@ export default function CommandPalette() {
             ESC
           </kbd>
           <button onClick={() => setIsOpen(false)} className="p-1 text-muted hover:text-white transition-colors">
-            <X className="w-4 h-4" />
+            <XMarkIcon className="w-4 h-4" />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#050816]/40">
+        <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#172B36]/40">
           {filteredCommands.length > 0 ? (
             filteredCommands.map((cat, idx) => (
               <div key={idx} className="space-y-2">
@@ -177,10 +183,10 @@ export default function CommandPalette() {
                     >
                       <div className="flex items-center gap-3.5">
                         <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 border border-white/10 text-muted group-hover:text-white transition-colors">
-                          {"icon" in item ? (item.icon as React.ReactNode) : <Search className="w-4 h-4" />}
+                          {"icon" in item ? (item.icon as React.ReactNode) : <SearchIcon className="w-4 h-4" />}
                         </div>
                         <div>
-                          <p className="text-xs font-semibold text-white font-heading group-hover:text-[#00D4FF] transition-colors">
+                          <p className="text-xs font-semibold text-white font-heading group-hover:text-[var(--accent-color)] transition-colors">
                             {item.name}
                           </p>
                           <p className="text-[10px] text-muted font-sans leading-none mt-1">
@@ -192,7 +198,7 @@ export default function CommandPalette() {
                         <span className="text-[9px] text-muted uppercase font-mono px-2 py-0.5 bg-white/5 border border-white/10 rounded">
                           {item.shortcut}
                         </span>
-                        <ArrowRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                        <ArrowRightIcon className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                       </div>
                     </button>
                   ))}
@@ -208,7 +214,7 @@ export default function CommandPalette() {
         </div>
 
         {/* Footer HUD info */}
-        <div className="px-4 py-3 bg-[#050816]/90 border-t border-white/5 flex items-center justify-between text-[10px] text-muted">
+        <div className="px-4 py-3 bg-[#172B36]/90 border-t border-white/5 flex items-center justify-between text-[10px] text-muted">
           <span>Search or navigate commands seamlessly</span>
           <div className="flex items-center gap-1.5">
             <span>Shortcut:</span>

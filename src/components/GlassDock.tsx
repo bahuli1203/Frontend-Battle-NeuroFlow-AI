@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Layers, BarChart3, Settings2, DollarSign, Command, HelpCircle } from "lucide-react";
+import {
+  LayersIcon,
+  ChartPieIcon,
+  Cog8ToothIcon,
+  DollarSignIcon,
+  CubeSolidIcon,
+  SpeakerWaveIcon,
+} from "@/components/icons/CustomIcons";
+import { useTheme } from "@/context/ThemeContext";
 
 interface DockItem {
   label: string;
@@ -15,6 +23,7 @@ export default function GlassDock() {
   const [scales, setScales] = useState<number[]>([1, 1, 1, 1, 1, 1]);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -28,27 +37,27 @@ export default function GlassDock() {
   const items: DockItem[] = [
     {
       label: "Features Stack",
-      icon: <Layers className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <LayersIcon className="w-4 h-4 sm:w-5 sm:h-5" />,
       action: () => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" }),
     },
     {
       label: "System Dashboard",
-      icon: <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <ChartPieIcon className="w-4 h-4 sm:w-5 sm:h-5" />,
       action: () => document.getElementById("dashboard")?.scrollIntoView({ behavior: "smooth" }),
     },
     {
       label: "Pipeline Builder",
-      icon: <Settings2 className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <Cog8ToothIcon className="w-4 h-4 sm:w-5 sm:h-5" />,
       action: () => document.getElementById("workflow-builder")?.scrollIntoView({ behavior: "smooth" }),
     },
     {
       label: "Compute Pricing",
-      icon: <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <DollarSignIcon className="w-4 h-4 sm:w-5 sm:h-5" />,
       action: () => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" }),
     },
     {
       label: "Command Palette",
-      icon: <Command className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <CubeSolidIcon className="w-4 h-4 sm:w-5 sm:h-5" />,
       action: () => {
         window.dispatchEvent(
           new KeyboardEvent("keydown", { key: "k", ctrlKey: true })
@@ -57,7 +66,7 @@ export default function GlassDock() {
     },
     {
       label: "Listen to AI Guide",
-      icon: <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5" />,
+      icon: <SpeakerWaveIcon className="w-4 h-4 sm:w-5 sm:h-5" />,
       action: () => {
         const synth = window.speechSynthesis;
         if (synth) {
@@ -110,13 +119,13 @@ export default function GlassDock() {
         ref={dockRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="pointer-events-auto flex items-end justify-center gap-2 sm:gap-3.5 px-3.5 py-2 sm:px-5 sm:py-3 rounded-2xl glass-panel-heavy border border-white/10 shadow-2xl glass-card-glow-purple transition-all duration-300"
+        className={`pointer-events-auto flex items-end justify-center gap-2 sm:gap-3.5 px-3.5 py-2 sm:px-5 sm:py-3 rounded-2xl glass-panel-heavy border border-white/10 shadow-2xl glass-card-glow-${theme} transition-all duration-300`}
       >
         {items.map((item, idx) => (
           <div key={idx} className="relative flex flex-col items-center">
             {/* Tooltip (Only on desktop) */}
             {!isMobile && activeTooltip === item.label && (
-              <span className="absolute bottom-[130%] text-[9px] font-heading font-semibold text-white px-2 py-1 rounded bg-[#0B1026] border border-white/10 shadow-md whitespace-nowrap animate-fade-in-up uppercase tracking-widest">
+              <span className="absolute bottom-[130%] text-[9px] font-heading font-semibold text-white px-2 py-1 rounded bg-[#114C5A] border border-white/10 shadow-md whitespace-nowrap animate-fade-in-up uppercase tracking-widest">
                 {item.label}
               </span>
             )}
@@ -128,7 +137,7 @@ export default function GlassDock() {
               onClick={item.action}
               onMouseEnter={() => !isMobile && setActiveTooltip(item.label)}
               onMouseLeave={() => !isMobile && setActiveTooltip(null)}
-              className="relative flex items-center justify-center rounded-xl bg-white/5 border border-white/5 hover:bg-[#7B61FF]/20 hover:border-[#7B61FF]/40 text-muted hover:text-white transition-all duration-100 outline-none"
+              className="relative flex items-center justify-center rounded-xl bg-white/5 border border-white/5 hover:bg-[var(--accent-color)]/20 hover:border-[var(--accent-color)]/45 text-muted hover:text-white transition-all duration-100 outline-none"
               style={{
                 width: `${baseSize * scales[idx]}px`,
                 height: `${baseSize * scales[idx]}px`,

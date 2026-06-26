@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { JetBrains_Mono, Inter } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -50,10 +50,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased dark`}
+      className={`${jetbrainsMono.variable} ${inter.variable} h-full antialiased dark`}
       style={{ colorScheme: "dark" }}
     >
-      <body className="min-h-full flex flex-col bg-[#050816] text-[#F8FAFC] font-sans selection:bg-[#7B61FF]/30 selection:text-white overflow-x-hidden">
+      <body className="min-h-full flex flex-col bg-[#172B36] text-[#F1F6F4] font-sans selection:bg-[#FF9932]/30 selection:text-white overflow-x-hidden">
         <ThemeProvider>
           {children}
         </ThemeProvider>

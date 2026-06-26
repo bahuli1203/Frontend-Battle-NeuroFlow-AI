@@ -2,26 +2,26 @@
 
 @theme {
   --font-sans: var(--font-inter);
-  --font-heading: var(--font-space-grotesk);
+  --font-heading: var(--font-jetbrains-mono);
 
-  --color-bg-primary: #050816;
-  --color-bg-secondary: #0B1026;
-  --color-accent-blue: #00D4FF;
-  --color-accent-purple: #7B61FF;
-  --color-accent-green: #00FFB2;
+  --color-bg-primary: #172B36; /* Oceanic Noir */
+  --color-bg-secondary: #114C5A; /* Nocturnal Expedition */
+  --color-accent-blue: #D9E8E2; /* Mystic Mint */
+  --color-accent-purple: #FF9932; /* Deep Saffron */
+  --color-accent-green: #FFC801; /* Forsythia */
   
   /* Dynamic ACCENT color mapped to active theme */
   --color-accent-primary: var(--accent-color);
   --color-accent-primary-glow: var(--accent-glow);
 
-  --color-white: #F8FAFC;
+  --color-white: #F1F6F4; /* Arctic Powder */
   --color-muted: #94A3B8;
 
   --animate-marquee: marquee 35s linear infinite;
   --animate-marquee-reverse: marquee-reverse 35s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
   --animate-float-delayed: float-delayed 7s ease-in-out infinite;
-  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3.5s ease-in-out infinite;
   --animate-spin-slow: spin 40s linear infinite;
   --animate-spin-slow-reverse: spin-reverse 50s linear infinite;
 
@@ -42,8 +42,8 @@
     50% { transform: translateY(12px) rotate(-1deg); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.35; filter: blur(40px); }
-    50% { opacity: 0.65; filter: blur(60px); }
+    0%, 100% { opacity: 0.3; filter: blur(60px); }
+    50% { opacity: 0.55; filter: blur(80px); }
   }
   @keyframes spin-reverse {
     0% { transform: rotate(360deg); }
@@ -52,27 +52,34 @@
 }
 
 :root {
-  --accent-color: #7B61FF;
-  --accent-glow: rgba(123, 97, 255, 0.15);
-  --accent-glow-heavy: rgba(123, 97, 255, 0.4);
+  --arctic-powder: #F1F6F4;
+  --mystic-mint: #D9E8E2;
+  --forsythia: #FFC801;
+  --deep-saffron: #FF9932;
+  --nocturnal-expedition: #114C5A;
+  --oceanic-noir: #172B36;
+
+  --accent-color: #FF9932; /* Default is Deep Saffron */
+  --accent-glow: rgba(255, 153, 50, 0.12);
+  --accent-glow-heavy: rgba(255, 153, 50, 0.35);
 }
 
 .theme-blue {
-  --accent-color: #00D4FF;
-  --accent-glow: rgba(0, 212, 255, 0.15);
-  --accent-glow-heavy: rgba(0, 212, 255, 0.4);
+  --accent-color: #D9E8E2; /* Mystic Mint */
+  --accent-glow: rgba(217, 232, 226, 0.12);
+  --accent-glow-heavy: rgba(217, 232, 226, 0.35);
 }
 
 .theme-purple {
-  --accent-color: #7B61FF;
-  --accent-glow: rgba(123, 97, 255, 0.15);
-  --accent-glow-heavy: rgba(123, 97, 255, 0.4);
+  --accent-color: #FF9932; /* Deep Saffron */
+  --accent-glow: rgba(255, 153, 50, 0.12);
+  --accent-glow-heavy: rgba(255, 153, 50, 0.35);
 }
 
 .theme-green {
-  --accent-color: #00FFB2;
-  --accent-glow: rgba(0, 255, 178, 0.15);
-  --accent-glow-heavy: rgba(0, 255, 178, 0.4);
+  --accent-color: #FFC801; /* Forsythia */
+  --accent-glow: rgba(255, 200, 1, 0.12);
+  --accent-glow-heavy: rgba(255, 200, 1, 0.35);
 }
 
 @layer base {
@@ -81,8 +88,8 @@
   }
   
   body {
-    background-color: #050816;
-    color: #F8FAFC;
+    background-color: #172B36; /* Oceanic Noir */
+    color: #F1F6F4; /* Arctic Powder */
   }
 
   /* Custom Scrollbar */
@@ -90,89 +97,90 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #050816;
+    background: #172B36;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1B2144;
+    background: #114C5A; /* Nocturnal Expedition */
     border-radius: 4px;
-    border: 2px solid #050816;
+    border: 2px solid #172B36;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #7B61FF;
+    background: #FF9932; /* Deep Saffron on hover */
   }
 }
 
 @layer utilities {
   .glass-panel {
-    background: rgba(11, 16, 38, 0.45);
+    background: rgba(23, 43, 54, 0.45); /* Semi-transparent Oceanic Noir */
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.04);
   }
   
   .glass-panel-heavy {
-    background: rgba(11, 16, 38, 0.75);
+    background: rgba(23, 43, 54, 0.75);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .glass-card-glow-blue {
-    box-shadow: 0 0 30px -10px rgba(0, 212, 255, 0.15);
+    box-shadow: 0 0 35px -10px rgba(217, 232, 226, 0.15);
   }
 
   .glass-card-glow-purple {
-    box-shadow: 0 0 30px -10px rgba(123, 97, 255, 0.15);
+    box-shadow: 0 0 35px -10px rgba(255, 153, 50, 0.15);
   }
   
   .glass-card-glow-green {
-    box-shadow: 0 0 30px -10px rgba(0, 255, 178, 0.15);
+    box-shadow: 0 0 35px -10px rgba(255, 200, 1, 0.15);
   }
 
   .neon-border-blue {
-    border-color: rgba(0, 212, 255, 0.25);
+    border-color: rgba(217, 232, 226, 0.2);
   }
   
   .neon-border-blue-hover:hover {
-    border-color: rgba(0, 212, 255, 0.6);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    border-color: rgba(217, 232, 226, 0.5);
+    box-shadow: 0 0 20px rgba(217, 232, 226, 0.15);
   }
 
   .neon-border-purple {
-    border-color: rgba(123, 97, 255, 0.25);
+    border-color: rgba(255, 153, 50, 0.2);
   }
 
   .neon-border-purple-hover:hover {
-    border-color: rgba(123, 97, 255, 0.6);
-    box-shadow: 0 0 20px rgba(123, 97, 255, 0.2);
+    border-color: rgba(255, 153, 50, 0.5);
+    box-shadow: 0 0 20px rgba(255, 153, 50, 0.15);
   }
 
   .neon-border-green {
-    border-color: rgba(0, 255, 178, 0.25);
+    border-color: rgba(255, 200, 1, 0.2);
   }
 
   .neon-border-green-hover:hover {
-    border-color: rgba(0, 255, 178, 0.6);
-    box-shadow: 0 0 20px rgba(0, 255, 178, 0.2);
+    border-color: rgba(255, 200, 1, 0.5);
+    box-shadow: 0 0 20px rgba(255, 200, 1, 0.15);
   }
 
   .text-glow-blue {
-    text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+    text-shadow: 0 0 15px rgba(217, 232, 226, 0.3);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 15px rgba(123, 97, 255, 0.4);
+    text-shadow: 0 0 15px rgba(255, 153, 50, 0.3);
   }
 
   .text-glow-green {
-    text-shadow: 0 0 15px rgba(0, 255, 178, 0.4);
+    text-shadow: 0 0 15px rgba(255, 200, 1, 0.3);
   }
 
   .grid-bg-cyber {
-    background-size: 40px 40px;
+    background-size: 50px 50px;
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(to right, rgba(241, 246, 244, 0.015) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(241, 246, 244, 0.015) 1px, transparent 1px);
   }
 }
+
 

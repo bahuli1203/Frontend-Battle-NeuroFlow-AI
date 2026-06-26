@@ -3,21 +3,21 @@ import { Cpu } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#050816] pt-24 pb-12 overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#172B36] pt-24 pb-12 overflow-hidden border-t border-white/5">
       {/* Glowing border accent */}
-      <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#7B61FF] to-transparent opacity-60" />
+      <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#FF9932] to-transparent opacity-40" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 pb-16">
         {/* Branding column */}
         <div className="md:col-span-4 space-y-6">
           <a href="#" className="flex items-center gap-2.5">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-[#7B61FF] to-[#00D4FF] p-[1px]">
-              <div className="w-full h-full bg-[#050816] rounded-[7px] flex items-center justify-center">
-                <Cpu className="w-4 h-4 text-[#00D4FF]" />
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-tr from-[#FF9932] to-[#FFC801] p-[1px]">
+              <div className="w-full h-full bg-[#172B36] rounded-[7px] flex items-center justify-center">
+                <Cpu className="w-4 h-4 text-[#FFC801]" />
               </div>
             </div>
             <span className="font-heading font-bold text-lg tracking-tight text-white">
-              NeuroFlow<span className="text-[#00D4FF]">AI</span>
+              NeuroFlow<span className="text-[#FFC801]">AI</span>
             </span>
           </a>
           <p className="text-xs text-muted font-sans leading-relaxed max-w-xs">
@@ -47,44 +47,44 @@ export default function Footer() {
 
 
         {/* Directory columns */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:col-span-8 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:col-span-8 gap-8 font-heading">
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">Product</h4>
-            <ul className="space-y-2 text-xs text-muted">
-              <li><a href="#features" className="hover:text-[#00D4FF] transition-colors">Bento Stack</a></li>
-              <li><a href="#dashboard" className="hover:text-[#00D4FF] transition-colors">Model Analytics</a></li>
-              <li><a href="#pricing" className="hover:text-[#00D4FF] transition-colors">Compute Pricing</a></li>
-              <li><a href="#process" className="hover:text-[#00D4FF] transition-colors">Synapse Pipeline</a></li>
+            <h4 className="font-bold text-xs text-white uppercase tracking-wider">Product</h4>
+            <ul className="space-y-2 text-xs text-muted font-sans">
+              <li><a href="#features" className="hover:text-[#FFC801] transition-colors">Bento Stack</a></li>
+              <li><a href="#dashboard" className="hover:text-[#FFC801] transition-colors">Model Analytics</a></li>
+              <li><a href="#pricing" className="hover:text-[#FFC801] transition-colors">Compute Pricing</a></li>
+              <li><a href="#workflow-builder" className="hover:text-[#FFC801] transition-colors">Synapse Pipeline</a></li>
             </ul>
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">Company</h4>
-            <ul className="space-y-2 text-xs text-muted">
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Security Core</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Careers (We're hiring)</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Press Kit</a></li>
+            <h4 className="font-bold text-xs text-white uppercase tracking-wider">Company</h4>
+            <ul className="space-y-2 text-xs text-muted font-sans">
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">About Us</a></li>
+              <li><a href="#security" className="hover:text-[#FFC801] transition-colors">Security Core</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">Careers (We're hiring)</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">Press Kit</a></li>
             </ul>
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-2 text-xs text-muted">
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">System Status</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">API References</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Developer Docs</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Node Registry</a></li>
+            <h4 className="font-bold text-xs text-white uppercase tracking-wider">Resources</h4>
+            <ul className="space-y-2 text-xs text-muted font-sans">
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">System Status</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">API References</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">Developer Docs</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">Node Registry</a></li>
             </ul>
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">Legal</h4>
-            <ul className="space-y-2 text-xs text-muted">
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Privacy Shield</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">SLA Agreement</a></li>
-              <li><a href="#" className="hover:text-[#00D4FF] transition-colors">GDPR Annex</a></li>
+            <h4 className="font-bold text-xs text-white uppercase tracking-wider">Legal</h4>
+            <ul className="space-y-2 text-xs text-muted font-sans">
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">Privacy Shield</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">SLA Agreement</a></li>
+              <li><a href="#" className="hover:text-[#FFC801] transition-colors">GDPR Annex</a></li>
             </ul>
           </div>
         </div>

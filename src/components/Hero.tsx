@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Play, Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, Layers, Cpu } from "lucide-react";
 import * as THREE from "three";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -68,82 +68,146 @@ export default function Hero() {
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
 
-    // Dynamic Physics Nodes on a Sphere (Mathematical Neural Grid)
-    const nodeCount = 150;
-    const restPositions: THREE.Vector3[] = [];
-    const currentPositions: THREE.Vector3[] = [];
-    const velocities: THREE.Vector3[] = [];
-
-    for (let i = 0; i < nodeCount; i++) {
-      // Golden Spiral distribution on sphere
-      const phi = Math.acos(-1 + (2 * i) / nodeCount);
-      const theta = Math.sqrt(nodeCount * Math.PI) * phi;
-      const radius = 1.6;
-
-      const x = Math.cos(theta) * Math.sin(phi) * radius;
-      const y = Math.sin(theta) * Math.sin(phi) * radius;
-      const z = Math.cos(phi) * radius;
-
-      const restPos = new THREE.Vector3(x, y, z);
-      restPositions.push(restPos);
-      currentPositions.push(restPos.clone());
-      velocities.push(new THREE.Vector3(0, 0, 0));
-    }
-
-    // Geometry for points
-    const pointsGeo = new THREE.BufferGeometry();
-    const pointsArray = new Float32Array(nodeCount * 3);
-    
-    // Initialize points array
-    currentPositions.forEach((pos, idx) => {
-      pointsArray[idx * 3] = pos.x;
-      pointsArray[idx * 3 + 1] = pos.y;
-      pointsArray[idx * 3 + 2] = pos.z;
-    });
-
-    pointsGeo.setAttribute("position", new THREE.BufferAttribute(pointsArray, 3));
-
-    // Points Material
-    const pointsMat = new THREE.PointsMaterial({
-      color: themeColorRef.current,
-      size: 0.07,
-      transparent: true,
-      opacity: 0.9,
-      blending: THREE.AdditiveBlending
-    });
-
-    const nodePoints = new THREE.Points(pointsGeo, pointsMat);
-    mainGroup.add(nodePoints);
-
-    // Connecting Lines Geometry & Material
-    // In neural networks, connect nodes that are closer than 0.7 units
-    const maxLineConnections = 300;
-    const lineIndices: number[] = [];
-
-    for (let i = 0; i < nodeCount; i++) {
-      for (let j = i + 1; j < nodeCount; j++) {
-        if (restPositions[i].distanceTo(restPositions[j]) < 0.7) {
-          lineIndices.push(i, j);
-        }
-      }
-    }
-
-    const linesGeo = new THREE.BufferGeometry();
-    const linePositionsArray = new Float32Array(lineIndices.length * 3);
-    linesGeo.setAttribute("position", new THREE.BufferAttribute(linePositionsArray, 3));
-
-    const linesMat = new THREE.LineBasicMaterial({
+    // 3D AI Control Tesseract Layout (nested 4D hypercube structure)
+    // Outer wireframe box
+    const boxGeometry = new THREE.BoxGeometry(2.2, 2.2, 2.2);
+    const edges = new THREE.EdgesGeometry(boxGeometry);
+    const lineMaterial = new THREE.LineBasicMaterial({
       color: themeColorRef.current,
       transparent: true,
       opacity: 0.35,
       blending: THREE.AdditiveBlending
     });
+    const boxWireframe = new THREE.LineSegments(edges, lineMaterial);
+    mainGroup.add(boxWireframe);
 
-    const lineSegments = new THREE.LineSegments(linesGeo, linesMat);
-    mainGroup.add(lineSegments);
+    // Inner wireframe box (Tesseract inner cage)
+    const innerBoxGeo = new THREE.BoxGeometry(1.1, 1.1, 1.1);
+    const innerBoxEdges = new THREE.EdgesGeometry(innerBoxGeo);
+    const innerBoxMat = new THREE.LineBasicMaterial({
+      color: themeColorRef.current,
+      transparent: true,
+      opacity: 0.28,
+      blending: THREE.AdditiveBlending
+    });
+    const innerBoxWireframe = new THREE.LineSegments(innerBoxEdges, innerBoxMat);
+    mainGroup.add(innerBoxWireframe);
 
-    // Orbiting data packets (outer rings)
-    const particleCount = 100;
+    // Dynamic Energy Tethers (tethers connecting core -> inner cage -> outer cage vertices)
+    const tetherGeo = new THREE.BufferGeometry();
+    const tetherPositions = new Float32Array(16 * 2 * 3); // 16 lines (8 inner, 8 outer) * 2 points * 3 coords
+    const cornersOuter = [
+      new THREE.Vector3(-1.1, -1.1, -1.1),
+      new THREE.Vector3(1.1, -1.1, -1.1),
+      new THREE.Vector3(-1.1, 1.1, -1.1),
+      new THREE.Vector3(1.1, 1.1, -1.1),
+      new THREE.Vector3(-1.1, -1.1, 1.1),
+      new THREE.Vector3(1.1, -1.1, 1.1),
+      new THREE.Vector3(-1.1, 1.1, 1.1),
+      new THREE.Vector3(1.1, 1.1, 1.1)
+    ];
+    const cornersInner = [
+      new THREE.Vector3(-0.55, -0.55, -0.55),
+      new THREE.Vector3(0.55, -0.55, -0.55),
+      new THREE.Vector3(-0.55, 0.55, -0.55),
+      new THREE.Vector3(0.55, 0.55, -0.55),
+      new THREE.Vector3(-0.55, -0.55, 0.55),
+      new THREE.Vector3(0.55, -0.55, 0.55),
+      new THREE.Vector3(-0.55, 0.55, 0.55),
+      new THREE.Vector3(0.55, 0.55, 0.55)
+    ];
+    let tIdx = 0;
+    for (let i = 0; i < 8; i++) {
+      // Line segment 1: Core Center -> Inner Cage Corner
+      tetherPositions[tIdx++] = 0;
+      tetherPositions[tIdx++] = 0;
+      tetherPositions[tIdx++] = 0;
+      tetherPositions[tIdx++] = cornersInner[i].x;
+      tetherPositions[tIdx++] = cornersInner[i].y;
+      tetherPositions[tIdx++] = cornersInner[i].z;
+
+      // Line segment 2: Inner Cage Corner -> Outer Cage Corner
+      tetherPositions[tIdx++] = cornersInner[i].x;
+      tetherPositions[tIdx++] = cornersInner[i].y;
+      tetherPositions[tIdx++] = cornersInner[i].z;
+      tetherPositions[tIdx++] = cornersOuter[i].x;
+      tetherPositions[tIdx++] = cornersOuter[i].y;
+      tetherPositions[tIdx++] = cornersOuter[i].z;
+    }
+    tetherGeo.setAttribute("position", new THREE.BufferAttribute(tetherPositions, 3));
+    const tetherMat = new THREE.LineBasicMaterial({
+      color: themeColorRef.current,
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending
+    });
+    const tethers = new THREE.LineSegments(tetherGeo, tetherMat);
+    mainGroup.add(tethers);
+
+    // Parallax Outer Spherical Cage
+    const outerSphereGeo = new THREE.IcosahedronGeometry(2.9, 2);
+    const outerSphereEdges = new THREE.EdgesGeometry(outerSphereGeo);
+    const outerSphereMat = new THREE.LineBasicMaterial({
+      color: 0x114C5A, // Nocturnal Expedition blue-green
+      transparent: true,
+      opacity: 0.15,
+      blending: THREE.AdditiveBlending
+    });
+    const outerSphere = new THREE.LineSegments(outerSphereEdges, outerSphereMat);
+    scene.add(outerSphere); // Place outside mainGroup for opposite rotation
+
+    // Floating computational rings (circular holograms) inside the cube
+    const planesGroup = new THREE.Group();
+    mainGroup.add(planesGroup);
+    
+    const planeGeo = new THREE.RingGeometry(0.35, 1.0, 32, 1);
+    const planeMat = new THREE.MeshBasicMaterial({
+      color: 0x114C5A, // Nocturnal Expedition accent
+      wireframe: true,
+      transparent: true,
+      opacity: 0.25,
+      side: THREE.DoubleSide
+    });
+    
+    const layerYPositions = [-0.6, 0, 0.6];
+    const layers: THREE.Mesh[] = [];
+    layerYPositions.forEach((yPos) => {
+      const mesh = new THREE.Mesh(planeGeo, planeMat);
+      mesh.rotation.x = Math.PI / 2; // Lie flat horizontal
+      mesh.position.y = yPos;
+      planesGroup.add(mesh);
+      layers.push(mesh);
+    });
+
+    // Inner glowing core sphere (using Phong material for specular reflection highlights)
+    const coreGeo = new THREE.SphereGeometry(0.35, 32, 32);
+    const coreMat = new THREE.MeshPhongMaterial({
+      color: themeColorRef.current,
+      transparent: true,
+      opacity: 0.85,
+      shininess: 120,
+      specular: 0xffffff,
+      emissive: themeColorRef.current,
+      emissiveIntensity: 0.35,
+      blending: THREE.AdditiveBlending
+    });
+    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    mainGroup.add(coreMesh);
+
+    // Middle Cage (Crystalline geodesic icosahedron cage)
+    const midCageGeo = new THREE.IcosahedronGeometry(1.5, 0);
+    const midCageEdges = new THREE.EdgesGeometry(midCageGeo);
+    const midCageMat = new THREE.LineBasicMaterial({
+      color: themeColorRef.current,
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending
+    });
+    const midCageWireframe = new THREE.LineSegments(midCageEdges, midCageMat);
+    mainGroup.add(midCageWireframe);
+
+    // Orbiting data packets (3 perpendicular outer rings)
+    const particleCount = 90; // 30 particles per plane
     const orbitingPositions = new Float32Array(particleCount * 3);
     const particleAngles: number[] = [];
     const particleSpeeds: number[] = [];
@@ -151,35 +215,41 @@ export default function Hero() {
 
     for (let i = 0; i < particleCount; i++) {
       particleAngles.push(Math.random() * Math.PI * 2);
-      particleSpeeds.push(0.004 + Math.random() * 0.008);
-      particleRadii.push(2.1 + Math.random() * 0.5);
+      particleSpeeds.push(0.006 + Math.random() * 0.007);
+      particleRadii.push(2.2 + Math.random() * 0.35);
     }
 
     const orbitingGeo = new THREE.BufferGeometry();
     orbitingGeo.setAttribute("position", new THREE.BufferAttribute(orbitingPositions, 3));
 
     const orbitingMat = new THREE.PointsMaterial({
-      color: 0x00D4FF, // cyan highlight
-      size: 0.045,
+      color: 0xFFC801, // Forsythia highlight
+      size: 0.04,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending
     });
 
     const orbitingPoints = new THREE.Points(orbitingGeo, orbitingMat);
     mainGroup.add(orbitingPoints);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    // Lights & Atmospheric Grid Config
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
     scene.add(ambientLight);
 
-    const blueLight = new THREE.PointLight(0x00D4FF, 2.5, 30);
+    const blueLight = new THREE.PointLight(0xD9E8E2, 3.0, 30);
     blueLight.position.set(4, 4, 4);
     scene.add(blueLight);
 
-    const purpleLight = new THREE.PointLight(0x7B61FF, 2.5, 30);
-    purpleLight.position.set(-4, -4, 4);
-    scene.add(purpleLight);
+    const orangeLight = new THREE.PointLight(0xFF9932, 3.0, 30);
+    orangeLight.position.set(-4, -4, 4);
+    scene.add(orangeLight);
+
+    // Subtle background grid helper inside the scene for depth
+    const sceneGrid = new THREE.GridHelper(10, 10, 0x114C5A, 0x114C5A);
+    sceneGrid.position.z = -3;
+    sceneGrid.rotation.x = Math.PI / 3;
+    scene.add(sceneGrid);
 
     // Parallax mouse variables
     let targetX = 0;
@@ -241,79 +311,68 @@ export default function Hero() {
       animationFrameId = requestAnimationFrame(animate);
 
       // Rotate groups
-      mainGroup.rotation.y += 0.0015;
+      mainGroup.rotation.y += 0.0014;
       mainGroup.rotation.x += 0.0006;
 
+      // Rotate outer parallax cage in opposite direction
+      outerSphere.rotation.y -= 0.0008;
+      outerSphere.rotation.z += 0.0004;
+
+      // Rotate internal computational rings opposite
+      planesGroup.rotation.y -= 0.0022;
+
+      // Slide computational rings up and down inside the cube (scanning laser wave effect)
+      layers.forEach((layer, idx) => {
+        const offset = Math.sin(Date.now() * 0.0012 + idx * Math.PI / 3) * 0.28;
+        layer.position.y = layerYPositions[idx] + offset;
+      });
+
+      // Orbiting lights: Move PointLights dynamically in a circle around the core
+      const lightTime = Date.now() * 0.001;
+      blueLight.position.x = Math.cos(lightTime) * 4.5;
+      blueLight.position.z = Math.sin(lightTime) * 4.5;
+      orangeLight.position.x = -Math.cos(lightTime + 1.2) * 4.5;
+      orangeLight.position.z = -Math.sin(lightTime + 1.2) * 4.5;
+
+      // Pulsate the core glowing sphere
+      const coreScale = 1.0 + Math.sin(Date.now() * 0.0025) * 0.08;
+      coreMesh.scale.set(coreScale, coreScale, coreScale);
+
       // Sync color with Theme Context dynamically
-      pointsMat.color.setHex(themeColorRef.current);
-      linesMat.color.setHex(themeColorRef.current);
+      lineMaterial.color.setHex(themeColorRef.current);
+      innerBoxMat.color.setHex(themeColorRef.current);
+      midCageMat.color.setHex(themeColorRef.current);
+      coreMat.color.setHex(themeColorRef.current);
+      coreMat.emissive.setHex(themeColorRef.current);
+      tetherMat.color.setHex(themeColorRef.current);
 
-      // Node Physics simulation (Spring rebound + mouse cursor gravity)
-      const pointsPos = nodePoints.geometry.attributes.position.array as Float32Array;
-      const linePositions = lineSegments.geometry.attributes.position.array as Float32Array;
+      // Rotate the middle crystalline cage on its own axis for dynamic depth
+      midCageWireframe.rotation.y += 0.0024;
+      midCageWireframe.rotation.x -= 0.0010;
 
-      // Calculate transformed mouse coordinate relative to main group rotation
-      const localMouse = mouse3D.clone().applyMatrix4(mainGroup.matrixWorld.clone().invert());
-
-      for (let i = 0; i < nodeCount; i++) {
-        const curr = currentPositions[i];
-        const rest = restPositions[i];
-        const vel = velocities[i];
-
-        // 1. Spring restoring force
-        const forceSpring = rest.clone().sub(curr).multiplyScalar(0.06);
-
-        // 2. Mouse gravity attraction if close
-        const distToMouse = curr.distanceTo(localMouse);
-        let forceMouse = new THREE.Vector3(0, 0, 0);
-        
-        if (distToMouse < 1.3) {
-          const attractStrength = (1.3 - distToMouse) * 0.12;
-          forceMouse = localMouse.clone().sub(curr).normalize().multiplyScalar(attractStrength);
-        }
-
-        // Update velocity & position
-        vel.multiplyScalar(0.85); // Damping friction
-        vel.add(forceSpring);
-        vel.add(forceMouse);
-        curr.add(vel);
-
-        // Write coordinates back to buffer
-        pointsPos[i * 3] = curr.x;
-        pointsPos[i * 3 + 1] = curr.y;
-        pointsPos[i * 3 + 2] = curr.z;
-      }
-      nodePoints.geometry.attributes.position.needsUpdate = true;
-
-      // Write connected lines back to segments
-      let lineIdx = 0;
-      for (let i = 0; i < lineIndices.length / 2; i++) {
-        const idxA = lineIndices[i * 2];
-        const idxB = lineIndices[i * 2 + 1];
-
-        const nodeA = currentPositions[idxA];
-        const nodeB = currentPositions[idxB];
-
-        linePositions[lineIdx++] = nodeA.x;
-        linePositions[lineIdx++] = nodeA.y;
-        linePositions[lineIdx++] = nodeA.z;
-
-        linePositions[lineIdx++] = nodeB.x;
-        linePositions[lineIdx++] = nodeB.y;
-        linePositions[lineIdx++] = nodeB.z;
-      }
-      lineSegments.geometry.attributes.position.needsUpdate = true;
-
-      // Orbiting particles ring update
+      // Orbiting particles: Split particles into 3 perpendicular orbital rings
       const orbitPos = orbitingPoints.geometry.attributes.position.array as Float32Array;
       for (let i = 0; i < particleCount; i++) {
         particleAngles[i] += particleSpeeds[i];
         const angle = particleAngles[i];
         const radius = particleRadii[i];
 
-        orbitPos[i * 3] = Math.cos(angle) * radius;
-        orbitPos[i * 3 + 1] = Math.sin(angle * 0.4) * (radius * 0.2); // Waving orbit plane
-        orbitPos[i * 3 + 2] = Math.sin(angle) * radius;
+        if (i < 30) {
+          // Ring 1: X-Z Horizontal plane
+          orbitPos[i * 3] = Math.cos(angle) * radius;
+          orbitPos[i * 3 + 1] = Math.sin(angle * 0.15) * (radius * 0.08);
+          orbitPos[i * 3 + 2] = Math.sin(angle) * radius;
+        } else if (i < 60) {
+          // Ring 2: Y-Z Vertical plane
+          orbitPos[i * 3] = Math.sin(angle * 0.15) * (radius * 0.08);
+          orbitPos[i * 3 + 1] = Math.cos(angle) * radius;
+          orbitPos[i * 3 + 2] = Math.sin(angle) * radius;
+        } else {
+          // Ring 3: X-Y Diagonal plane
+          orbitPos[i * 3] = Math.cos(angle) * radius;
+          orbitPos[i * 3 + 1] = Math.sin(angle) * radius;
+          orbitPos[i * 3 + 2] = Math.sin(angle * 0.15) * (radius * 0.08);
+        }
       }
       orbitingPoints.geometry.attributes.position.needsUpdate = true;
 
@@ -349,12 +408,27 @@ export default function Hero() {
       canvas.removeEventListener("touchcancel", handleTouchEnd);
       resizeObserver.disconnect();
       renderer.dispose();
-      pointsGeo.dispose();
-      pointsMat.dispose();
-      linesGeo.dispose();
-      linesMat.dispose();
+      boxGeometry.dispose();
+      edges.dispose();
+      lineMaterial.dispose();
+      innerBoxGeo.dispose();
+      innerBoxEdges.dispose();
+      innerBoxMat.dispose();
+      tetherGeo.dispose();
+      tetherMat.dispose();
+      outerSphereGeo.dispose();
+      outerSphereEdges.dispose();
+      outerSphereMat.dispose();
+      planeGeo.dispose();
+      planeMat.dispose();
+      coreGeo.dispose();
+      coreMat.dispose();
+      midCageGeo.dispose();
+      midCageEdges.dispose();
+      midCageMat.dispose();
       orbitingGeo.dispose();
       orbitingMat.dispose();
+      sceneGrid.dispose();
     };
   }, []);
 
@@ -363,43 +437,43 @@ export default function Hero() {
       {/* Background glowing gradients */}
       <div 
         className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] rounded-full blur-[120px] animate-pulse-glow transition-all duration-700" 
-        style={{ backgroundColor: `${themeColorStr}15` }} // Dynamic theme glow
+        style={{ backgroundColor: `${themeColorStr}10` }} // Dynamic theme glow
       />
-      <div className="absolute bottom-[20%] right-[10%] w-[25vw] h-[25vw] rounded-full bg-[#00D4FF]/10 blur-[100px] animate-pulse-glow" />
+      <div className="absolute bottom-[20%] right-[10%] w-[25vw] h-[25vw] rounded-full bg-[#FF9932]/5 blur-[100px] animate-pulse-glow" />
 
       {/* Floating stars particles backdrop */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-        <div className="absolute top-[30%] left-[15%] w-1.5 h-1.5 rounded-full bg-[#00FFB2] animate-float" />
-        <div className="absolute top-[60%] left-[8%] w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-float-delayed" />
-        <div className="absolute top-[20%] right-[25%] w-2 h-2 rounded-full bg-[#7B61FF] animate-float" />
-        <div className="absolute top-[75%] right-[15%] w-1.5 h-1.5 rounded-full bg-[#00FFB2] animate-float-delayed" />
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+        <div className="absolute top-[30%] left-[15%] w-1.5 h-1.5 rounded-full bg-[#FFC801] animate-float" />
+        <div className="absolute top-[60%] left-[8%] w-1.5 h-1.5 rounded-full bg-[#D9E8E2] animate-float-delayed" />
+        <div className="absolute top-[20%] right-[25%] w-2 h-2 rounded-full bg-[#FF9932] animate-float" />
+        <div className="absolute top-[75%] right-[15%] w-1.5 h-1.5 rounded-full bg-[#FFC801] animate-float-delayed" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Side Copywriting */}
         <div className="lg:col-span-6 flex flex-col items-start text-left space-y-6 max-w-xl mx-auto lg:mx-0">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md animate-fade-in">
-            <Sparkles className="w-4 h-4 text-[#00FFB2]" />
-            <span className="text-xs font-heading font-semibold text-[#00FFB2] tracking-wider uppercase">
-              Next-Gen Neural Globe System
+            <Sparkles className="w-4 h-4 text-[#FFC801]" />
+            <span className="text-xs font-heading font-semibold text-[#FFC801] tracking-wider uppercase">
+              AI Command Center
             </span>
           </div>
 
-          <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-white">
-            Transform Data <br />
-            Into Decisions At The <br />
+          <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-white uppercase">
+            AI Automation <br />
+            For The <br />
             <span 
               className="bg-clip-text text-transparent bg-gradient-to-r transition-all duration-700"
               style={{
-                backgroundImage: `linear-gradient(to right, #00D4FF, ${themeColorStr}, #00FFB2)`,
+                backgroundImage: `linear-gradient(to right, #FFC801, ${themeColorStr}, #FF9932)`,
               }}
             >
-              Speed Of Thought
+              Modern Era
             </span>
           </h1>
 
           <p className="text-sm sm:text-base text-muted font-sans leading-relaxed">
-            AI-powered workflow automation platform designed for modern enterprises. Predict outcomes, map vector relationships, and execute jobs with zero manual overhead.
+            Transform enterprise data into autonomous decisions with advanced AI workflows. Predict outcomes, map vector relationships, and execute jobs with zero manual overhead.
           </p>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
@@ -408,7 +482,7 @@ export default function Hero() {
               href="#pricing"
               onMouseMove={(e) => handleMagneticMove(e, setBtnOffsetLeft)}
               onMouseLeave={() => handleMagneticLeave(setBtnOffsetLeft)}
-              className="relative inline-flex items-center justify-center px-8 py-3.5 overflow-hidden text-xs font-semibold rounded-xl group bg-gradient-to-br from-[#7B61FF] to-[#00D4FF] hover:bg-gradient-to-r hover:from-[#00D4FF] hover:to-[#00FFB2] text-white shadow-xl transition-all duration-75 text-center font-heading active:scale-95 cursor-pointer select-none"
+              className="relative inline-flex items-center justify-center px-8 py-3.5 overflow-hidden text-xs font-semibold rounded-xl group bg-gradient-to-br from-[#FF9932] to-[#FFC801] hover:bg-gradient-to-r hover:from-[#FFC801] hover:to-[#D9E8E2] text-white shadow-xl transition-all duration-75 text-center font-heading active:scale-95 cursor-pointer select-none"
               style={{
                 transform: `translate3d(${btnOffsetLeft.x}px, ${btnOffsetLeft.y}px, 0)`,
                 willChange: "transform",
@@ -420,7 +494,7 @@ export default function Hero() {
             {/* Magnetic Watch button */}
             <button
               onClick={() => {
-                document.getElementById("dashboard")?.scrollIntoView({ behavior: "smooth" });
+                document.getElementById("process")?.scrollIntoView({ behavior: "smooth" });
               }}
               onMouseMove={(e) => handleMagneticMove(e, setBtnOffsetRight)}
               onMouseLeave={() => handleMagneticLeave(setBtnOffsetRight)}
@@ -430,8 +504,8 @@ export default function Hero() {
                 willChange: "transform",
               }}
             >
-              <Play className="w-3.5 h-3.5 text-[#00D4FF] fill-[#00D4FF]/20" />
-              Watch Demo
+              <Cpu className="w-3.5 h-3.5 text-[#FFC801]" />
+              View Architecture
             </button>
           </div>
 
@@ -459,26 +533,26 @@ export default function Hero() {
             className="w-full max-w-[500px] aspect-square relative flex items-center justify-center rounded-full"
           >
             {/* Background rotating radial design rings */}
-            <div className="absolute inset-4 rounded-full border border-[#7B61FF]/10 bg-radial-gradient from-transparent to-[#7B61FF]/5 animate-spin-slow pointer-events-none" />
-            <div className="absolute inset-12 rounded-full border border-dashed border-[#00D4FF]/20 animate-spin-slow-reverse pointer-events-none" />
+            <div className="absolute inset-4 rounded-full border border-[#FF9932]/10 bg-radial-gradient from-transparent to-[#FF9932]/5 animate-spin-slow pointer-events-none" />
+            <div className="absolute inset-12 rounded-full border border-dashed border-[#FFC801]/10 animate-spin-slow-reverse pointer-events-none" />
 
             <canvas
               ref={canvasRef}
               className="w-full h-full relative z-10 cursor-grab active:cursor-grabbing touch-none"
-              title="Interactive 3D Holographic AI Neural Globe"
+              title="Interactive 3D Holographic AI Control Cube"
             />
             
             {/* Indicator tag */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-[10px] text-muted flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/5 pointer-events-none uppercase tracking-wider font-heading">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00FFB2] animate-ping" />
-              Dynamic Neural Globe
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFC801] animate-ping" />
+              3D AI Control Cube
             </div>
           </div>
         </div>
       </div>
 
       {/* Fade mask */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050816] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#172B36] to-transparent pointer-events-none" />
     </section>
   );
 }

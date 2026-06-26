@@ -75,7 +75,7 @@ export default function PageLoader() {
     // Glowing Inner Core Geometry
     const coreGeo = new THREE.IcosahedronGeometry(1.0, 1);
     const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x7B61FF, // Quantum Purple
+      color: 0xFF9932, // Deep Saffron core
       wireframe: true,
       transparent: true,
       opacity: 0.8,
@@ -83,11 +83,11 @@ export default function PageLoader() {
     });
     const core = new THREE.Mesh(coreGeo, coreMat);
     scene.add(core);
-
+ 
     // Outer Shell Geometry
     const shellGeo = new THREE.DodecahedronGeometry(1.4, 0);
     const shellMat = new THREE.MeshBasicMaterial({
-      color: 0x00D4FF, // Cyber Blue
+      color: 0xD9E8E2, // Mystic Mint shell
       wireframe: true,
       transparent: true,
       opacity: 0.25,
@@ -95,7 +95,7 @@ export default function PageLoader() {
     });
     const shell = new THREE.Mesh(shellGeo, shellMat);
     scene.add(shell);
-
+ 
     // Orbiting particle points
     const particleCount = 30;
     const particlePositions = new Float32Array(particleCount * 3);
@@ -105,52 +105,52 @@ export default function PageLoader() {
       particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.3;
       particlePositions[i * 3 + 2] = Math.sin(angle) * 1.7;
     }
-
+ 
     const particleGeo = new THREE.BufferGeometry();
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
     const particleMat = new THREE.PointsMaterial({
-      color: 0x00FFB2, // Emerald green
+      color: 0xFFC801, // Forsythia particles
       size: 0.05,
       transparent: true,
       opacity: 0.8,
     });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
-
+ 
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
-
-    const pointLight = new THREE.PointLight(0x7B61FF, 1.5, 10);
+ 
+    const pointLight = new THREE.PointLight(0xFF9932, 1.5, 10);
     pointLight.position.set(2, 2, 2);
     scene.add(pointLight);
-
+ 
     let animationFrameId: number;
     let clock = new THREE.Clock();
-
+ 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-
+ 
       const elapsedTime = clock.getElapsedTime();
-
+ 
       // Spin geometries at different rates
       core.rotation.y += 0.03;
       core.rotation.x += 0.015;
-
+ 
       shell.rotation.y -= 0.015;
       shell.rotation.z += 0.01;
-
+ 
       // Pulsing scale for core
       const pulse = 1 + Math.sin(elapsedTime * 4) * 0.08;
       core.scale.set(pulse, pulse, pulse);
-
+ 
       particles.rotation.y += 0.01;
-
+ 
       renderer.render(scene, camera);
     };
-
+ 
     animate();
-
+ 
     return () => {
       cancelAnimationFrame(animationFrameId);
       renderer.dispose();
@@ -162,45 +162,45 @@ export default function PageLoader() {
       particleMat.dispose();
     };
   }, []);
-
+ 
   if (!isRendered) return null;
-
+ 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-[#050816] flex flex-col items-center justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] bg-[#172B36] flex flex-col items-center justify-center transition-opacity duration-500 ${
         isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
       {/* Background glow highlights */}
-      <div className="absolute w-[45vw] h-[45vw] rounded-full bg-[#7B61FF]/10 blur-[130px] pointer-events-none" />
-
+      <div className="absolute w-[45vw] h-[45vw] rounded-full bg-[#FF9932]/10 blur-[130px] pointer-events-none" />
+ 
       <div className="relative z-10 flex flex-col items-center space-y-6 max-w-xs w-full px-6">
         {/* Interactive 3D Loader Canvas */}
         <div className="w-[180px] h-[180px] flex items-center justify-center relative">
           <canvas ref={canvasRef} className="w-full h-full" />
           {/* Subtle logo inside 3D core wireframe bounds */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px] font-heading font-extrabold tracking-widest text-[#00D4FF] animate-pulse">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px] font-heading font-extrabold tracking-widest text-[#D9E8E2] animate-pulse">
             CORE
           </div>
         </div>
-
+ 
         {/* Word Header */}
         <h1 className="font-heading font-extrabold text-2xl tracking-widest text-white text-center h-8">
           {text}
-          <span className="w-1.5 h-5 bg-[#00FFB2] inline-block ml-1 animate-pulse" />
+          <span className="w-1.5 h-5 bg-[#FFC801] inline-block ml-1 animate-pulse" />
         </h1>
-
+ 
         {/* Progress Bar */}
         <div className="w-full space-y-2">
           <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
             <div
-              className="h-full bg-gradient-to-r from-[#7B61FF] via-[#00D4FF] to-[#00FFB2] rounded-full transition-all duration-100 ease-out"
+              className="h-full bg-gradient-to-r from-[#FF9932] via-[#D9E8E2] to-[#FFC801] rounded-full transition-all duration-100 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
           <div className="flex justify-between items-center text-[9px] text-muted font-mono">
             <span>COGNITIVE CORE SYNC</span>
-            <span className="text-[#00FFB2]">{progress}%</span>
+            <span className="text-[#FFC801]">{progress}%</span>
           </div>
         </div>
       </div>
